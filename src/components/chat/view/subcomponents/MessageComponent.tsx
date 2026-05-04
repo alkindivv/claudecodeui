@@ -117,8 +117,7 @@ const MessageComponent = memo(({ message, prevMessage, createDiff, onFileOpen, o
       className={`message-row chat-message ${message.type} ${isGrouped ? 'grouped' : ''} ${message.type === 'user' ? 'message-user' : 'message-assistant'}`}
     >
       {message.type === 'user' ? (
-        /* User message bubble on the right */
-        <div className="flex w-full items-end justify-end">
+        <div className="message-content">
           <div className="group max-w-[85%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-primary-foreground shadow-sm">
             <div className="whitespace-pre-wrap break-words text-[15px] leading-relaxed">
               {message.content}
@@ -143,10 +142,8 @@ const MessageComponent = memo(({ message, prevMessage, createDiff, onFileOpen, o
               <span>{formattedTime}</span>
             </div>
           </div>
-          {/* Avatar removed for cleaner look */}
         </div>
       ) : message.isTaskNotification ? (
-        /* Compact task notification on the left */
         <div className="w-full">
           <div className="flex items-center gap-2 py-0.5">
             <span className={`inline-block h-1.5 w-1.5 flex-shrink-0 rounded-full ${message.taskStatus === 'completed' ? 'bg-green-400 dark:bg-green-500' : 'bg-amber-400 dark:bg-amber-500'}`} />
@@ -154,8 +151,7 @@ const MessageComponent = memo(({ message, prevMessage, createDiff, onFileOpen, o
           </div>
         </div>
       ) : (
-        /* Claude/Error/Tool messages on the left */
-        <div className="w-full">
+        <div className="message-content">
           {!isGrouped && (
             <div className="mb-3 flex items-center gap-2">
               {message.type === 'error' ? (

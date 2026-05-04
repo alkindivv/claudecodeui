@@ -14,12 +14,9 @@ import type {
 import { ImageIcon, MessageSquareIcon, XIcon, ArrowDownIcon } from 'lucide-react';
 import type { PendingPermissionRequest, PermissionMode, Provider } from '../../types/types';
 import CommandMenu from './CommandMenu';
-import ClaudeStatus from './ClaudeStatus';
 import ImageAttachment from './ImageAttachment';
 import PermissionRequestsBanner from './PermissionRequestsBanner';
-import ThinkingModeSelector from './ThinkingModeSelector';
-import TokenUsagePie from './TokenUsagePie';
-import ComposerAdvancedMenu from './ComposerAdvancedMenu';
+import ComposerOverflowMenu from './ComposerOverflowMenu';
 import {
   PromptInput,
   PromptInputHeader,
@@ -302,21 +299,25 @@ export default function ChatComposer({
         </PromptInputBody>
 
         <PromptInputFooter>
-          <PromptInputTools className="gap-1">
+          <PromptInputTools className="gap-0.5 sm:gap-1">
+            {/* Attach images */}
             <PromptInputButton
               tooltip={{ content: t('input.attachImages') }}
               onClick={openImagePicker}
-              className="h-8 w-8"
+              className="h-8 w-8 sm:h-9 sm:w-9"
+              aria-label="Attach images"
             >
               <ImageIcon className="h-4 w-4" />
             </PromptInputButton>
 
+            {/* Slash commands */}
             <PromptInputButton
               tooltip={{ content: t('input.showAllCommands') }}
               onClick={onToggleCommandMenu}
-              className="relative h-8 w-8 [&_svg]:h-4 [&_svg]:w-4 lg:h-9 lg:w-9"
+              className="relative h-8 w-8 sm:h-9 sm:w-9"
+              aria-label="Show commands"
             >
-              <MessageSquareIcon />
+              <MessageSquareIcon className="h-4 w-4" />
               {slashCommandsCount > 0 && (
                 <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
                   {slashCommandsCount}
@@ -324,55 +325,56 @@ export default function ChatComposer({
               )}
             </PromptInputButton>
 
-            {/* Advanced menu - only visible on larger screens */}
-            <div className="hidden lg:block">
-              <ComposerAdvancedMenu
-                provider={provider}
-                permissionMode={permissionMode}
-                onModeSwitch={onModeSwitch}
-                thinkingMode={thinkingMode}
-                setThinkingMode={setThinkingMode}
-                tokenBudget={tokenBudget}
-              />
-            </div>
+            {/* Overflow menu - all screens */}
+            <ComposerOverflowMenu
+              provider={provider}
+              permissionMode={permissionMode}
+              onModeSwitch={onModeSwitch}
+              thinkingMode={thinkingMode}
+              setThinkingMode={setThinkingMode}
+              tokenBudget={tokenBudget}
+            />
           </PromptInputTools>
 
           <div className="flex items-center gap-2">
-            {/* Streaming indicator in footer - replaces submit when active */}
-            {isLoading ? (
-              <div className="flex items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center">
-                  <div className="h-2 w-2 animate-pulse rounded-full bg-primary/60" />
-                </div>
-                <button
-                  type="button"
-                  onClick={onAbortSession}
-                  className="flex h-9 items-center gap-1.5 rounded-lg bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20"
-                >
-                  <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
-                    <rect x="6" y="6" width="12" height="12" rx="1" />
-                  </svg>
-                  Stop
-                </button>
-              </div>
-            ) : (
-              <>
-                <div className={`hidden text-xs text-muted-foreground/50 transition-opacity duration-200 lg:block ${input.trim() ? 'opacity-0' : 'opacity-100'}`}>
-                  {sendByCtrlEnter ? t('input.hintText.ctrlEnter') : t('input.hintText.enter')}
-                </div>
-                <PromptInputSubmit
-                  disabled={!input.trim() || isLoading}
-                  className="h-9 w-9 sm:h-10 sm:w-10"
-                  onMouseDown={(event) => {
-                    event.preventDefault();
-                    onSubmit(event as unknown as MouseEvent<HTMLButtonElement>);
-                  }}
-                  onTouchStart={(event) => {
-                    event.preventDefault();
-                    onSubmit(event as unknown as TouchEvent<HTMLButtonElement>);
-                  }}
-                />
-              </>
+            {/* Keyboard hint - desktop only, fades when typing */}
+            <div
+              className={`hidden text-xs text-muted-foreground/50 transition-opacity duration-200 ${
+                input.trim() ? 'opacity-0' : 'opacity-100'
+              }`}
+            >
+              {sendByCtrlEnter ? '⌘↵' : '↵'}
+            </div>
+
+            {/* Stop button during streaming */}
+            {isLoading && (
+              <button
+                type="button"
+                onClick={onAbortSession}
+                className="flex h-9 items-center gap-1.5 rounded-lg bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20"
+                aria-label="Stop generation"
+              >
+                <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                  <rect x="6" y="6" width="12" height="12" rx="1" />
+                </svg>
+                Stop
+              </button>
+            )}
+
+            {/* Send button - hidden during streaming */}
+            {!isLoading && (
+              <PromptInputSubmit
+                disabled={!input.trim()}
+                className="h-9 w-9 sm:h-10 sm:w-10"
+                onMouseDown={(event) => {
+                  event.preventDefault();
+                  onSubmit(event as unknown as MouseEvent<HTMLButtonElement>);
+                }}
+                onTouchStart={(event) => {
+                  event.preventDefault();
+                  onSubmit(event as unknown as TouchEvent<HTMLButtonElement>);
+                }}
+              />
             )}
           </div>
         </PromptInputFooter>

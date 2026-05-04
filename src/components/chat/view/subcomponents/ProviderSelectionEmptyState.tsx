@@ -89,7 +89,7 @@ function getCurrentModel(
   return cu;
 }
 
-function getProviderDisplayName(p: LLMProvider) {
+function getProviderDisplayName(p: string) {
   if (p === "claude") return "Claude";
   if (p === "cursor") return "Cursor";
   if (p === "codex") return "Codex";
@@ -131,7 +131,7 @@ export default function ProviderSelectionEmptyState({
       return base.map(p => {
         if (p.id === 'nrouter9') {
           // Use dynamic models from 9Router
-          const nrouterModels = models.map(m => ({
+          const nrouterModels = (models as {fullModel: string; name: string; provider: string}[]).map(m => ({
             value: m.fullModel,
             label: `${m.name} (${m.provider})`,
           }));

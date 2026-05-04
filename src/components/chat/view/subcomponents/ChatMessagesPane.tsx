@@ -5,6 +5,8 @@ import type { ChatMessage } from '../../types/types';
 import type { Project, ProjectSession, LLMProvider } from '../../../../types/app';
 import { getIntrinsicMessageKey } from '../../utils/messageKeys';
 import MessageComponent from './MessageComponent';
+import AssistantProcessingRow from './AssistantProcessingRow';
+import EmptyChatState from './EmptyChatState';
 import ProviderSelectionEmptyState from './ProviderSelectionEmptyState';
 
 interface ChatMessagesPaneProps {
@@ -270,7 +272,15 @@ export default function ChatMessagesPane({
             );
           })}
 
-          {/* Streaming state is now handled in composer footer - no floating status */}
+          {/* Assistant processing row - shows when loading AND messages exist */}
+          {isLoading && (
+            <AssistantProcessingRow
+              isLoading={isLoading}
+              claudeStatus={claudeStatus ?? null}
+              onAbort={onAbortSession ?? (() => {})}
+              provider={provider}
+            />
+          )}
         </>
       )}
       </div>
