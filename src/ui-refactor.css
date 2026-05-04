@@ -11,103 +11,92 @@
  * - Obvious states
  */
 
-@layer base {
-  /* Refined color palette - calm and readable */
-  .dark {
-    /* Backgrounds - subtle gradation for depth */
-    --background: 212 13% 12%;        /* #1a1d24 - Main background */
-    --surface: 212 13% 15%;           /* #1f2329 - Elevated surfaces */
-    --surface-hover: 212 13% 18%;     /* #252a32 - Hover states */
-    --surface-active: 212 13% 20%;    /* #2a303a - Active/pressed */
-    
-    /* Borders - subtle but visible */
-    --border: 212 13% 22%;            /* #2f3640 - Default borders */
-    --border-strong: 212 13% 28%;     /* #3d4654 - Emphasized borders */
-    
-    /* Text - clear hierarchy */
-    --text-primary: 210 20% 98%;      /* #f7f9fb - Primary text */
-    --text-secondary: 215 14% 71%;    /* #adb5bd - Secondary text */
-    --text-tertiary: 215 12% 55%;     /* #7d8694 - Tertiary/muted */
-    --text-disabled: 215 10% 40%;     /* #5a6270 - Disabled state */
-    
-    /* Accent - trust and clarity */
-    --accent-primary: 217 91% 60%;    /* #3b82f6 - Primary actions */
-    --accent-hover: 217 91% 65%;      /* #60a5fa - Hover state */
-    --accent-subtle: 217 91% 20%;     /* #0f2d5c - Subtle backgrounds */
-    
-    /* Status colors - clear communication */
-    --status-success: 142 71% 45%;    /* #10b981 */
-    --status-warning: 38 92% 50%;     /* #f59e0b */
-    --status-error: 0 84% 60%;        /* #ef4444 */
-    --status-info: 199 89% 48%;       /* #0ea5e9 */
-    
-    /* Semantic colors */
-    --user-message-bg: var(--surface);
-    --assistant-message-bg: var(--background);
-    --code-bg: 212 13% 10%;           /* #14161a - Code blocks */
-    --code-border: var(--border);
-  }
+/* Refined color palette - calm and readable */
+.dark {
+  /* Backgrounds - subtle gradation for depth */
+  --surface: 212 13% 15%;           /* #1f2329 - Elevated surfaces */
+  --surface-hover: 212 13% 18%;     /* #252a32 - Hover states */
+  --surface-active: 212 13% 20%;    /* #2a303a - Active/pressed */
   
-  /* Light mode - clean and bright */
-  :root {
-    --background: 0 0% 100%;          /* #ffffff */
-    --surface: 210 20% 98%;           /* #f7f9fb */
-    --surface-hover: 210 20% 96%;     /* #f1f4f7 */
-    --surface-active: 210 20% 94%;    /* #ebeef2 */
-    
-    --border: 214 32% 91%;            /* #e5e7eb */
-    --border-strong: 214 32% 82%;     /* #cbd5e1 */
-    
-    --text-primary: 222 47% 11%;      /* #1f2937 */
-    --text-secondary: 215 16% 47%;    /* #6b7280 */
-    --text-tertiary: 215 14% 65%;     /* #9ca3af */
-    --text-disabled: 215 12% 80%;     /* #d1d5db */
-    
-    --accent-primary: 217 91% 60%;    /* #3b82f6 */
-    --accent-hover: 217 91% 55%;      /* #2563eb */
-    --accent-subtle: 217 91% 95%;     /* #eff6ff */
-    
-    --status-success: 142 71% 45%;
-    --status-warning: 38 92% 50%;
-    --status-error: 0 84% 60%;
-    --status-info: 199 89% 48%;
-    
-    --user-message-bg: var(--surface);
-    --assistant-message-bg: var(--background);
-    --code-bg: 210 20% 98%;
-    --code-border: var(--border);
-  }
+  /* Borders - subtle but visible */
+  --border-strong: 212 13% 28%;     /* #3d4654 - Emphasized borders */
+  
+  /* Text - clear hierarchy */
+  --text-primary: 210 20% 98%;      /* #f7f9fb - Primary text */
+  --text-secondary: 215 14% 71%;    /* #adb5bd - Secondary text */
+  --text-tertiary: 215 12% 55%;     /* #7d8694 - Tertiary/muted */
+  --text-disabled: 215 10% 40%;     /* #5a6270 - Disabled state */
+  
+  /* Accent - trust and clarity */
+  --accent-primary: 217 91% 60%;    /* #3b82f6 - Primary actions */
+  --accent-hover: 217 91% 65%;      /* #60a5fa - Hover state */
+  --accent-subtle: 217 91% 20%;     /* #0f2d5c - Subtle backgrounds */
+  
+  /* Status colors - clear communication */
+  --status-success: 142 71% 45%;    /* #10b981 */
+  --status-warning: 38 92% 50%;     /* #f59e0b */
+  --status-error: 0 84% 60%;        /* #ef4444 */
+  --status-info: 199 89% 48%;       /* #0ea5e9 */
+  
+  /* Semantic colors */
+  --user-message-bg: var(--surface);
+  --assistant-message-bg: var(--background);
+  --code-bg: 212 13% 10%;           /* #14161a - Code blocks */
+  --code-border: var(--border);
+}
+
+/* Light mode - clean and bright */
+:root {
+  --surface: 210 20% 98%;           /* #f7f9fb */
+  --surface-hover: 210 20% 96%;     /* #f1f4f7 */
+  --surface-active: 210 20% 94%;    /* #ebeef2 */
+  
+  --border-strong: 214 32% 82%;     /* #cbd5e1 */
+  
+  --text-primary: 222 47% 11%;      /* #1f2937 */
+  --text-secondary: 215 16% 47%;    /* #6b7280 */
+  --text-tertiary: 215 14% 65%;     /* #9ca3af */
+  --text-disabled: 215 12% 80%;     /* #d1d5db */
+  
+  --accent-primary: 217 91% 60%;    /* #3b82f6 */
+  --accent-hover: 217 91% 55%;      /* #2563eb */
+  --accent-subtle: 217 91% 95%;     /* #eff6ff */
+  
+  --status-success: 142 71% 45%;
+  --status-warning: 38 92% 50%;
+  --status-error: 0 84% 60%;
+  --status-info: 199 89% 48%;
+  
+  --user-message-bg: var(--surface);
+  --assistant-message-bg: var(--background);
+  --code-bg: 210 20% 98%;
+  --code-border: var(--border);
 }
 
 /* Typography - readable and calm */
-@layer base {
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
-    color: hsl(var(--text-primary));
-    background: hsl(var(--background));
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
-    line-height: 1.3;
-    color: hsl(var(--text-primary));
-  }
-  
-  h1 { font-size: 1.875rem; } /* 30px */
-  h2 { font-size: 1.5rem; }   /* 24px */
-  h3 { font-size: 1.25rem; }  /* 20px */
-  h4 { font-size: 1.125rem; } /* 18px */
-  h5 { font-size: 1rem; }     /* 16px */
-  h6 { font-size: 0.875rem; } /* 14px */
-  
-  code, pre, kbd {
-    font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
-    font-size: 0.875em;
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+h1 { font-size: 1.875rem; } /* 30px */
+h2 { font-size: 1.5rem; }   /* 24px */
+h3 { font-size: 1.25rem; }  /* 20px */
+h4 { font-size: 1.125rem; } /* 18px */
+h5 { font-size: 1rem; }     /* 16px */
+h6 { font-size: 0.875rem; } /* 14px */
+
+code, pre, kbd {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Fira Code', 'Droid Sans Mono', 'Source Code Pro', monospace;
+  font-size: 0.875em;
 }
 
 /* Layout - conversation-first */
