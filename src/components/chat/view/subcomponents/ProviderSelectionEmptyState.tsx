@@ -3,12 +3,14 @@ import { Check, ChevronDown } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
 
 import { useServerPlatform } from "../../../../hooks/useServerPlatform";
+import { useNrouter9Models } from "../../../../hooks/useNrouter9Models";
 import SessionProviderLogo from "../../../llm-logo-provider/SessionProviderLogo";
 import {
   CLAUDE_MODELS,
   CURSOR_MODELS,
   CODEX_MODELS,
   GEMINI_MODELS,
+  NROUTER9_MODELS,
   PROVIDERS,
 } from "../../../../../shared/modelConstants";
 import type { ProjectSession, LLMProvider } from "../../../../types/app";
@@ -44,6 +46,8 @@ type ProviderSelectionEmptyStateProps = {
   setCodexModel: (model: string) => void;
   geminiModel: string;
   setGeminiModel: (model: string) => void;
+  nrouter9Model: string;
+  setNrouter9Model: (model: string) => void;
   tasksEnabled: boolean;
   isTaskMasterInstalled: boolean | null;
   onShowAllTasks?: (() => void) | null;
@@ -66,6 +70,7 @@ function getModelConfig(p: LLMProvider) {
   if (p === "claude") return CLAUDE_MODELS;
   if (p === "codex") return CODEX_MODELS;
   if (p === "gemini") return GEMINI_MODELS;
+  if (p === "nrouter9") return NROUTER9_MODELS;
   return CURSOR_MODELS;
 }
 
@@ -75,10 +80,12 @@ function getCurrentModel(
   cu: string,
   co: string,
   g: string,
+  n: string,
 ) {
   if (p === "claude") return c;
   if (p === "codex") return co;
   if (p === "gemini") return g;
+  if (p === "nrouter9") return n;
   return cu;
 }
 
@@ -86,6 +93,7 @@ function getProviderDisplayName(p: LLMProvider) {
   if (p === "claude") return "Claude";
   if (p === "cursor") return "Cursor";
   if (p === "codex") return "Codex";
+  if (p === "nrouter9") return "9Router";
   return "Gemini";
 }
 
@@ -103,6 +111,8 @@ export default function ProviderSelectionEmptyState({
   setCodexModel,
   geminiModel,
   setGeminiModel,
+  nrouter9Model,
+  setNrouter9Model,
   tasksEnabled,
   isTaskMasterInstalled,
   onShowAllTasks,
@@ -111,11 +121,28 @@ export default function ProviderSelectionEmptyState({
   const { t } = useTranslation("chat");
   const { isWindowsServer } = useServerPlatform();
   const [dialogOpen, setDialogOpen] = useState(false);
+  const { models, combos, loading: nrouter9Loading } = useNrouter9Models();
 
-  const visibleProviderGroups = useMemo(
-    () => (isWindowsServer ? PROVIDER_GROUPS.filter((p) => p.id !== "cursor") : PROVIDER_GROUPS),
-    [isWindowsServer],
-  );
+  const visibleProviderGroups = useMemo(() => {
+    const base = isWindowsServer ? PROVIDER_GROUPS.filter((p) => p.id !== "cursor") : PROVIDER_GROUPS;
+    
+    // If nrouter9 is available and we have dynamic models, add them
+    if (nrouter9Model && models.length > 0 && !isWindowsServer) {
+      return base.map(p => {
+        if (p.id === 'nrouter9') {
+          // Use dynamic models from 9Router
+          const nrouterModels = models.map(m => ({
+            value: m.fullModel,
+            label: `${m.name} (${m.provider})`,
+          }));
+          return { ...p, models: nrouterModels };
+        }
+        return p;
+      });
+    }
+    
+    return base;
+  }, [isWindowsServer, models, nrouter9Model]);
 
   useEffect(() => {
     if (isWindowsServer && provider === "cursor") {
@@ -134,6 +161,7 @@ export default function ProviderSelectionEmptyState({
     cursorModel,
     codexModel,
     geminiModel,
+    nrouter9Model,
   );
 
   const currentModelLabel = useMemo(() => {
@@ -155,12 +183,15 @@ export default function ProviderSelectionEmptyState({
       } else if (providerId === "gemini") {
         setGeminiModel(modelValue);
         localStorage.setItem("gemini-model", modelValue);
+      } else if (providerId === "nrouter9") {
+        setNrouter9Model(modelValue);
+        localStorage.setItem("nrouter9-model", modelValue);
       } else {
         setCursorModel(modelValue);
         localStorage.setItem("cursor-model", modelValue);
       }
     },
-    [setClaudeModel, setCursorModel, setCodexModel, setGeminiModel],
+    [setClaudeModel, setCursorModel, setCodexModel, setGeminiModel, setNrouter9Model],
   );
 
   const handleModelSelect = useCallback(
@@ -286,6 +317,9 @@ export default function ProviderSelectionEmptyState({
                 }),
                 gemini: t("providerSelection.readyPrompt.gemini", {
                   model: geminiModel,
+                }),
+                nrouter9: t("providerSelection.readyPrompt.nrouter9", {
+                  model: nrouter9Model,
                 }),
               }[provider]
             }

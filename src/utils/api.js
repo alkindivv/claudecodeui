@@ -224,6 +224,17 @@ export const api = {
       }),
   },
 
+  // 9Router endpoints
+  nrouter9: {
+    config: () => authenticatedFetch('/api/nrouter9/config'),
+    models: () => authenticatedFetch('/api/nrouter9/models'),
+    combos: () => authenticatedFetch('/api/nrouter9/combos'),
+    chat: (body) => authenticatedFetch('/api/nrouter9/chat', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+  },
+
   // Generic GET method for any endpoint
   get: (endpoint) => authenticatedFetch(`/api${endpoint}`),
 
