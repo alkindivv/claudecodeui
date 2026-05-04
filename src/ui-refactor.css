@@ -40,7 +40,7 @@
 
   /* Muted - dimmer text / backgrounds */
   --muted: 220 12% 16%;             /* #23272e */
-  --muted-foreground: 215 12% 60%;  /* #88919e */
+  --muted-foreground: 215 12% 65%;  /* #949ba8 - improved contrast */
 
   /* Accent - same as secondary */
   --accent: 220 12% 18%;
@@ -98,6 +98,11 @@ code, pre, kbd, samp {
 .composer-bar {
   border-top: 1px solid hsl(var(--border));
   background: hsl(var(--card));
+}
+
+/* Composer focus state - only show ring when textarea is focused */
+.composer-bar:has(textarea:focus) {
+  border-top-color: hsl(var(--primary) / 0.3);
 }
 
 /* Session header */
@@ -235,9 +240,11 @@ code, pre, kbd, samp {
 }
 
 .sidebar-session-item[data-active="true"] {
-  background: hsl(var(--primary) / 0.12);
+  background: hsl(var(--primary) / 0.15);
   color: hsl(var(--primary));
-  font-weight: 500;
+  font-weight: 600;
+  border-left: 2px solid hsl(var(--primary));
+  padding-left: calc(0.75rem - 2px);
 }
 
 .sidebar-session-title {
@@ -304,7 +311,31 @@ code, pre, kbd, samp {
   .message-row {
     padding: 0 0.75rem;
   }
+  
   .message-user .message-bubble {
-    max-width: 85%;
+    max-width: 90%;
+  }
+  
+  /* Tighter spacing on mobile */
+  .message-row + .message-row {
+    margin-top: 1rem;
+  }
+  
+  /* Composer adjustments */
+  .composer-bar {
+    padding: 0.75rem;
+  }
+  
+  /* Session header more compact */
+  .session-header {
+    padding: 0.5rem 0.75rem;
+    min-height: 44px;
+  }
+}
+
+/* Tablet breakpoint */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .message-row {
+    padding: 0 1rem;
   }
 }
