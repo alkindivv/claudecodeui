@@ -30,12 +30,23 @@ function getTabTitle(activeTab: AppTab, shouldShowTasksTab: boolean, t: (key: st
   return 'Project';
 }
 
+const BAD_TITLES = new Set(['hey', 'hi', 'hello', 'heyt', 'yo', 'sup', 'oi', 'aloha']);
+const SHORT_BAD_TITLES = new Set(['', ' ', '  ', '...', '???']);
+
+function isBadTitle(title: string | undefined | null): boolean {
+  if (!title) return true;
+  const t = title.trim().toLowerCase();
+  return BAD_TITLES.has(t) || t.length < 3 || SHORT_BAD_TITLES.has(t);
+}
+
 function getSessionTitle(session: ProjectSession): string {
   if (session.__provider === 'cursor') {
-    return (session.name as string) || 'Untitled Session';
+    const name = (session.name as string) || '';
+    return isBadTitle(name) ? 'New Session' : name;
   }
 
-  return (session.summary as string) || 'New Session';
+  const summary = (session.summary as string) || '';
+  return isBadTitle(summary) ? 'New Conversation' : summary;
 }
 
 export default function MainContentTitle({
