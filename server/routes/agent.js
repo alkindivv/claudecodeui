@@ -859,8 +859,8 @@ router.post('/', validateExternalApiKey, async (req, res) => {
     return res.status(400).json({ error: 'message is required' });
   }
 
-  if (!['claude', 'cursor', 'codex', 'gemini'].includes(provider)) {
-    return res.status(400).json({ error: 'provider must be "claude", "cursor", "codex", or "gemini"' });
+  if (!['claude', 'cursor', 'codex', 'gemini', 'nrouter9'].includes(provider)) {
+    return res.status(400).json({ error: 'provider must be "claude", "cursor", "codex", "gemini", or "nrouter9"' });
   }
 
   // Validate GitHub branch/PR creation requirements
@@ -980,6 +980,35 @@ router.post('/', validateExternalApiKey, async (req, res) => {
         model: model,
         skipPermissions: true // CLI mode bypasses permissions
       }, writer);
+    } else if (provider === 'nrouter9') {
+      console.log('🔀 Starting 9Router session');
+
+      // Get 9Router credentials from user settings
+      const nrouter9Config = credentialsDb.getCredentials(req.user.id, 'nrouter9');
+      const config = nrouter9Config?.[0]?.credentials || {};
+      const endpoint = config.endpoint || process.env.NROUTER9_ENDPOINT || 'http://127.0.0.1:20128';
+
+      const nrouter9Provider = new (await import('@/modules/providers/list/nrouter9/nrouter9.provider.js')).Nrouter9Provider();
+      const session = await nrouter9Provider.sessions.createSession({
+        endpoint,
+        apiKey: config.apiKey,
+        model: model || 'kr/claude-sonnet-4.5',
+      });
+
+      writer.send({
+        type: 'status',
+        message: `9Router session started (${session.model})`,
+        projectPath: finalProjectPath
+      });
+
+      const result = await nrouter9Provider.sessions.sendMessage(session.sessionId, message.trim(), {
+        endpoint,
+        apiKey: config.apiKey,
+        model: session.model,
+      });
+
+      writer.send({ type: 'message', content: result.response });
+      writer.send({ type: 'done' });
     }
 
     // Handle GitHub branch and PR creation after successful agent completion

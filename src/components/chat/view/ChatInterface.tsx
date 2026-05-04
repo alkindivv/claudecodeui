@@ -75,6 +75,8 @@ function ChatInterface({
     setCodexModel,
     geminiModel,
     setGeminiModel,
+    nrouter9Model,
+    setNrouter9Model,
     permissionMode,
     pendingPermissionRequests,
     setPendingPermissionRequests,
@@ -324,6 +326,8 @@ function ChatInterface({
           setCodexModel={setCodexModel}
           geminiModel={geminiModel}
           setGeminiModel={setGeminiModel}
+          nrouter9Model={nrouter9Model}
+          setNrouter9Model={setNrouter9Model}
           tasksEnabled={tasksEnabled}
           isTaskMasterInstalled={isTaskMasterInstalled}
           onShowAllTasks={onShowAllTasks}
