@@ -12,6 +12,7 @@ export { ScrollArea } from './ScrollArea';
 export { Reasoning, ReasoningTrigger, ReasoningContent, useReasoning } from './Reasoning';
 export { Shimmer } from './Shimmer';
 export { default as Tooltip } from './Tooltip';
+export { StatusPill, statusPillVariants } from './StatusPill';
 export { PromptInput, PromptInputHeader, PromptInputBody, PromptInputTextarea, PromptInputFooter, PromptInputTools, PromptInputButton, PromptInputSubmit } from './PromptInput';
 export { PillBar, Pill } from './PillBar';
 export { Queue, QueueItem, QueueItemIndicator, QueueItemContent } from './Queue';
