@@ -6,6 +6,7 @@ import type { Project, ProjectSession, LLMProvider } from '../../../../types/app
 import { getIntrinsicMessageKey } from '../../utils/messageKeys';
 import MessageComponent from './MessageComponent';
 import ProviderSelectionEmptyState from './ProviderSelectionEmptyState';
+import ClaudeStatus from './ClaudeStatus';
 
 interface ChatMessagesPaneProps {
   scrollContainerRef: RefObject<HTMLDivElement>;
@@ -52,6 +53,9 @@ interface ChatMessagesPaneProps {
   showRawParameters?: boolean;
   showThinking?: boolean;
   selectedProject: Project;
+  isLoading?: boolean;
+  claudeStatus?: { text: string; tokens: number; can_interrupt: boolean } | null;
+  onAbortSession?: () => void;
 }
 
 export default function ChatMessagesPane({
@@ -99,6 +103,9 @@ export default function ChatMessagesPane({
   showRawParameters,
   showThinking,
   selectedProject,
+  isLoading,
+  claudeStatus,
+  onAbortSession,
 }: ChatMessagesPaneProps) {
   const { t } = useTranslation('chat');
   const messageKeyMapRef = useRef<WeakMap<ChatMessage, string>>(new WeakMap());
@@ -263,6 +270,18 @@ export default function ChatMessagesPane({
               />
             );
           })}
+
+          {/* Show processing status inline with messages */}
+          {isLoading && (
+            <div className="mt-4">
+              <ClaudeStatus
+                status={claudeStatus}
+                isLoading={isLoading}
+                onAbort={onAbortSession}
+                provider={provider}
+              />
+            </div>
+          )}
         </>
       )}
       </div>
