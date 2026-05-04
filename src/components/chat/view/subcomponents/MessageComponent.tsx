@@ -118,9 +118,9 @@ const MessageComponent = memo(({ message, prevMessage, createDiff, onFileOpen, o
     >
       {message.type === 'user' ? (
         /* User message bubble on the right */
-        <div className="flex w-full items-end space-x-0 sm:w-auto sm:max-w-[85%] sm:space-x-3 md:max-w-md lg:max-w-lg xl:max-w-xl">
-          <div className="group flex-1 rounded-2xl rounded-br-md bg-blue-600 px-3 py-2 text-white shadow-sm sm:flex-initial sm:px-4">
-            <div className="whitespace-pre-wrap break-words text-sm">
+        <div className="flex w-full items-end justify-end">
+          <div className="group max-w-[85%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-primary-foreground shadow-sm">
+            <div className="whitespace-pre-wrap break-words text-[15px] leading-relaxed">
               {message.content}
             </div>
             {message.images && message.images.length > 0 && (
@@ -143,11 +143,7 @@ const MessageComponent = memo(({ message, prevMessage, createDiff, onFileOpen, o
               <span>{formattedTime}</span>
             </div>
           </div>
-          {!isGrouped && (
-            <div className="hidden h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-blue-600 text-sm text-white sm:flex">
-              U
-            </div>
-          )}
+          {/* Avatar removed for cleaner look */}
         </div>
       ) : message.isTaskNotification ? (
         /* Compact task notification on the left */
@@ -161,22 +157,22 @@ const MessageComponent = memo(({ message, prevMessage, createDiff, onFileOpen, o
         /* Claude/Error/Tool messages on the left */
         <div className="w-full">
           {!isGrouped && (
-            <div className="mb-2 flex items-center space-x-3">
+            <div className="mb-3 flex items-center gap-2">
               {message.type === 'error' ? (
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-red-600 text-sm text-white">
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md bg-red-500/10 text-xs text-red-500">
                   !
                 </div>
               ) : message.type === 'tool' ? (
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gray-600 text-sm text-white dark:bg-gray-700">
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md bg-muted text-xs">
                   🔧
                 </div>
               ) : (
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full p-1 text-sm text-white">
+                <div className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md bg-primary/10 p-1">
                   <SessionProviderLogo provider={provider} className="h-full w-full" />
                 </div>
               )}
-              <div className="text-sm font-medium text-gray-900 dark:text-white">
-                {message.type === 'error' ? t('messageTypes.error') : message.type === 'tool' ? t('messageTypes.tool') : (provider === 'cursor' ? t('messageTypes.cursor') : provider === 'codex' ? t('messageTypes.codex') : provider === 'gemini' ? t('messageTypes.gemini') : t('messageTypes.claude'))}
+              <div className="text-sm font-semibold text-foreground">
+                {message.type === 'error' ? t('messageTypes.error') : message.type === 'tool' ? t('messageTypes.tool') : (provider === 'cursor' ? t('messageTypes.cursor') : provider === 'codex' ? t('messageTypes.codex') : provider === 'gemini' ? t('messageTypes.gemini') : provider === 'nrouter9' ? '9Router' : t('messageTypes.claude'))}
               </div>
             </div>
           )}

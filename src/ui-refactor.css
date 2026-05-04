@@ -124,7 +124,12 @@ code, pre, kbd, samp {
 }
 
 .message-row + .message-row {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
+}
+
+/* Better spacing for grouped messages */
+.message-row.grouped {
+  margin-top: 0.5rem;
 }
 
 /* User messages — right-aligned bubble (ChatGPT style) */
@@ -149,10 +154,25 @@ code, pre, kbd, samp {
 }
 
 .message-assistant .message-bubble {
-  padding: 0 0.25rem;
+  padding: 0;
   max-width: 100%;
   width: 100%;
   line-height: 1.65;
+}
+
+/* Improve prose styling for assistant messages */
+.message-assistant .prose {
+  font-size: 15px;
+  line-height: 1.65;
+  color: hsl(var(--foreground));
+}
+
+.message-assistant .prose p {
+  margin-bottom: 0.75rem;
+}
+
+.message-assistant .prose p:last-child {
+  margin-bottom: 0;
 }
 
 /* Tool messages — subtle, smaller */
