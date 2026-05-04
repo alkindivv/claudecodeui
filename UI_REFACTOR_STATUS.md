@@ -145,3 +145,44 @@ Phase 1 foundation is solid. Ready to apply these styles to actual components an
 - Refresh browser now (will see old UI with new CSS loaded)
 - Wait for Phase 2 to see actual visual improvements
 - Review `UI_REFACTOR_PROGRESS.md` for full roadmap
+
+---
+
+## Final Status (Commit 61c1f91)
+
+### What Changed
+- **Reverted** 2 bad UI commits (compact mode + old design system)
+- **Created** clean `ui-refactor.css` with ChatGPT-inspired variables
+- **Added** `StatusPill` shared component for status indicators
+- **Refined** dark mode palette (calm, readable, accessible)
+- **Fixed** PostCSS `@layer` build errors
+- **Verified** production build passes
+
+### Architecture
+- CSS variables flow through existing shadcn components (Button, Card, Badge, Input)
+- No new dependencies added
+- Existing shadcn primitives used as-is
+- New CSS is a thin layer: ~200 lines of variable overrides + utility classes
+
+### Key Colors (Dark Mode)
+- Background: `#16181c` (slightly warm)
+- Cards/surfaces: `#1c1f24`
+- Borders: `#2c3037` (subtle)
+- Text: `#f1f4f7` (readable)
+- Primary: `#3b82f6` (restrained blue)
+
+### Acceptance Criteria Status
+- [x] Bad UI reverted without breaking 9Router functionality
+- [x] Build passes (npm run build:client)
+- [x] Light/dark mode preserved via CSS variables
+- [x] Keyboard focus states visible (2px ring)
+- [x] Reduced motion support
+- [x] Consistent spacing via existing shadcn tokens
+- [x] Clean scrollbars
+
+### Remaining Work (Phase 2 - Future)
+- Apply CSS class names to component wrappers
+- Improve message bubble layout in MessageComponent
+- Add session header with status indicator
+- Empty/loading/error states
+- Mobile responsive improvements

@@ -114,7 +114,7 @@ const MessageComponent = memo(({ message, prevMessage, createDiff, onFileOpen, o
     <div
       ref={messageRef}
       data-message-timestamp={message.timestamp || undefined}
-      className={`chat-message ${message.type} ${isGrouped ? 'grouped' : ''} ${message.type === 'user' ? 'flex justify-end px-3 sm:px-0' : 'px-3 sm:px-0'}`}
+      className={`message-row chat-message ${message.type} ${isGrouped ? 'grouped' : ''} ${message.type === 'user' ? 'message-user' : 'message-assistant'}`}
     >
       {message.type === 'user' ? (
         /* User message bubble on the right */

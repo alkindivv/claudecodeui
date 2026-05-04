@@ -354,7 +354,7 @@ function ChatInterface({
           selectedProject={selectedProject}
         />
 
-        <ChatComposer
+        <div className="composer-bar"><ChatComposer
           pendingPermissionRequests={pendingPermissionRequests}
           handlePermissionDecision={handlePermissionDecision}
           handleGrantToolPermission={handleGrantToolPermission}
@@ -421,7 +421,7 @@ function ChatInterface({
           isTextareaExpanded={isTextareaExpanded}
           sendByCtrlEnter={sendByCtrlEnter}
         />
-      </div>
+      </div></div>
 
       <QuickSettingsPanel />
     </PermissionContext.Provider>
