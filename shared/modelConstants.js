@@ -96,6 +96,30 @@ export const GEMINI_MODELS = {
 };
 
 /**
+ * 9Router Models
+ * 
+ * 9Router provides access to multiple AI providers through a single proxy.
+ * Models use the pattern: provider/model-name (e.g., kr/claude-sonnet-4.5)
+ * - kr/* = Kiro AI models (free tier available)
+ * - oc/* = OpenChat models
+ * - Other providers routed through 9Router
+ */
+export const NROUTER9_MODELS = {
+  OPTIONS: [
+    // Kiro AI models (free tier)
+    { value: "kr/claude-sonnet-4.5", label: "Kiro Claude Sonnet 4.5" },
+    { value: "kr/glm-5", label: "Kiro GLM-5" },
+    { value: "oc/<auto>", label: "OpenChat Auto" },
+    // Direct routed models (when credentials are set in 9Router)
+    { value: "chatgpt/gpt-5", label: "ChatGPT GPT-5" },
+    { value: "claude/claude-sonnet-4.5", label: "Claude Sonnet 4.5" },
+    { value: "gemini/gemini-2.5-flash", label: "Gemini 2.5 Flash" },
+    { value: "deepseek/deepseek-chat", label: "DeepSeek Chat" },
+  ],
+  DEFAULT: "kr/claude-sonnet-4.5",
+};
+
+/**
  * Ordered provider registry. Display order in selection UIs.
  */
 export const PROVIDERS = [
@@ -103,4 +127,5 @@ export const PROVIDERS = [
   { id: "codex", name: "OpenAI", models: CODEX_MODELS },
   { id: "gemini", name: "Google", models: GEMINI_MODELS },
   { id: "cursor", name: "Cursor", models: CURSOR_MODELS },
+  { id: "nrouter9", name: "9Router", models: NROUTER9_MODELS },
 ];
