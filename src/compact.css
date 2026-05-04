@@ -1,0 +1,149 @@
+/**
+ * Compact UI Overrides
+ * Makes CloudCLI more dense, clean, and comfortable
+ */
+
+/* Reduce global padding and margins */
+.compact-mode {
+  /* Tighter spacing for cards and containers */
+  --spacing-xs: 0.25rem;  /* 4px */
+  --spacing-sm: 0.5rem;   /* 8px */
+  --spacing-md: 0.75rem;  /* 12px */
+  --spacing-lg: 1rem;     /* 16px */
+  --spacing-xl: 1.5rem;   /* 24px */
+}
+
+/* Compact header/navbar */
+header, nav {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+}
+
+/* Compact cards */
+.card, [class*="card"] {
+  padding: 0.75rem !important;
+}
+
+/* Compact buttons */
+button {
+  padding: 0.5rem 1rem !important;
+  min-height: 36px !important;
+  font-size: 0.875rem !important;
+}
+
+/* Compact form inputs */
+input, textarea, select {
+  padding: 0.5rem 0.75rem !important;
+  min-height: 36px !important;
+  font-size: 0.875rem !important;
+}
+
+/* Compact message bubbles */
+.message, [class*="message"] {
+  padding: 0.75rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Compact sidebar */
+aside, [class*="sidebar"] {
+  padding: 0.75rem !important;
+}
+
+/* Reduce line height for better density */
+p, div, span {
+  line-height: 1.4 !important;
+}
+
+/* Compact headings */
+h1 { font-size: 1.5rem !important; margin-bottom: 0.5rem !important; }
+h2 { font-size: 1.25rem !important; margin-bottom: 0.5rem !important; }
+h3 { font-size: 1.125rem !important; margin-bottom: 0.5rem !important; }
+h4 { font-size: 1rem !important; margin-bottom: 0.5rem !important; }
+
+/* Compact lists */
+ul, ol {
+  padding-left: 1.25rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+li {
+  margin-bottom: 0.25rem !important;
+}
+
+/* Compact code blocks */
+pre, code {
+  padding: 0.5rem !important;
+  font-size: 0.8125rem !important;
+  line-height: 1.3 !important;
+}
+
+/* Compact modals/dialogs */
+[role="dialog"], .modal {
+  padding: 1rem !important;
+}
+
+/* Compact spacing between sections */
+section {
+  margin-bottom: 1rem !important;
+}
+
+/* Remove excessive gaps */
+.gap-4 { gap: 0.5rem !important; }
+.gap-6 { gap: 0.75rem !important; }
+.gap-8 { gap: 1rem !important; }
+
+/* Compact padding utilities */
+.p-4 { padding: 0.75rem !important; }
+.p-6 { padding: 1rem !important; }
+.p-8 { padding: 1.25rem !important; }
+
+.px-4 { padding-left: 0.75rem !important; padding-right: 0.75rem !important; }
+.px-6 { padding-left: 1rem !important; padding-right: 1rem !important; }
+.px-8 { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+
+.py-4 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+.py-6 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+.py-8 { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
+
+/* Compact margin utilities */
+.m-4 { margin: 0.75rem !important; }
+.m-6 { margin: 1rem !important; }
+.m-8 { margin: 1.25rem !important; }
+
+.mb-4 { margin-bottom: 0.75rem !important; }
+.mb-6 { margin-bottom: 1rem !important; }
+.mb-8 { margin-bottom: 1.25rem !important; }
+
+/* Tighter border radius for cleaner look */
+.rounded-lg { border-radius: 0.5rem !important; }
+.rounded-xl { border-radius: 0.75rem !important; }
+
+/* Reduce shadow intensity for cleaner look */
+.shadow-sm { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important; }
+.shadow { box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1) !important; }
+.shadow-md { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important; }
+
+/* Clean scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
