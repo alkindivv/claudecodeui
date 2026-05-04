@@ -13,6 +13,10 @@
 export const CLAUDE_MODELS = {
   // Models in SDK format (what the actual SDK accepts)
   OPTIONS: [
+    { value: "9R-General", label: "9Router General" },
+    { value: "9R-Auditor", label: "9Router Auditor" },
+    { value: "9R-Imp-LowCode", label: "9Router Low Code" },
+    { value: "9R-Imp-HighCode", label: "9Router High Code" },
     { value: "opus", label: "Opus" },
     { value: "sonnet", label: "Sonnet" },
     { value: "haiku", label: "Haiku" },
@@ -22,7 +26,7 @@ export const CLAUDE_MODELS = {
     { value: "opus[1m]", label: "Opus [1M]" },
   ],
 
-  DEFAULT: "opus",
+  DEFAULT: "9R-General",
 };
 
 /**

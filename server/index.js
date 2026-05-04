@@ -66,6 +66,7 @@ import geminiRoutes from './routes/gemini.js';
 import pluginsRoutes from './routes/plugins.js';
 import providerRoutes from './modules/providers/provider.routes.js';
 import nrouter9Routes from './routes/nrouter9.js';
+import debugRoutes from './routes/debug.js';
 import { startEnabledPluginServers, stopAllPlugins, getPluginPort } from './utils/plugin-process-manager.js';
 import { initializeDatabase, projectsDb } from './modules/database/index.js';
 import { configureWebPush } from './services/vapid-keys.js';
@@ -188,6 +189,9 @@ app.use('/api/providers', authenticateToken, providerRoutes);
 
 // 9Router Proxy Routes (protected)
 app.use('/api/nrouter9', authenticateToken, nrouter9Routes);
+
+// Debug Routes (unprotected for testing)
+app.use('/api/debug', debugRoutes);
 
 // Agent API Routes (uses API key authentication)
 app.use('/api/agent', agentRoutes);
