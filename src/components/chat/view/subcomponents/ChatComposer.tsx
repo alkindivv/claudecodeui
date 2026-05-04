@@ -175,8 +175,7 @@ export default function ChatComposer({
   const hasPendingPermissions = pendingPermissionRequests.length > 0;
 
   return (
-    <div className="flex-shrink-0 p-2 pb-2 sm:p-4 sm:pb-4 md:p-4 md:pb-6">
-      {/* ClaudeStatus moved to message area */}
+    <div className="flex-shrink-0 p-1.5 pb-2 sm:p-3 sm:pb-4 md:p-4 md:pb-6">
 
       {pendingPermissionRequests.length > 0 && (
         <div className="mx-auto mb-3 max-w-4xl">
@@ -303,60 +302,78 @@ export default function ChatComposer({
         </PromptInputBody>
 
         <PromptInputFooter>
-          <PromptInputTools>
+          <PromptInputTools className="gap-1">
             <PromptInputButton
               tooltip={{ content: t('input.attachImages') }}
               onClick={openImagePicker}
+              className="h-8 w-8"
             >
-              <ImageIcon />
+              <ImageIcon className="h-4 w-4" />
             </PromptInputButton>
 
             <PromptInputButton
               tooltip={{ content: t('input.showAllCommands') }}
               onClick={onToggleCommandMenu}
-              className="relative"
+              className="relative h-8 w-8 [&_svg]:h-4 [&_svg]:w-4 lg:h-9 lg:w-9"
             >
               <MessageSquareIcon />
               {slashCommandsCount > 0 && (
-                <span
-                  className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground"
-                >
+                <span className="absolute -right-1 -top-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
                   {slashCommandsCount}
                 </span>
               )}
             </PromptInputButton>
 
-            <ComposerAdvancedMenu
-              provider={provider}
-              permissionMode={permissionMode}
-              onModeSwitch={onModeSwitch}
-              thinkingMode={thinkingMode}
-              setThinkingMode={setThinkingMode}
-              tokenBudget={tokenBudget}
-            />
-
+            {/* Advanced menu - only visible on larger screens */}
+            <div className="hidden lg:block">
+              <ComposerAdvancedMenu
+                provider={provider}
+                permissionMode={permissionMode}
+                onModeSwitch={onModeSwitch}
+                thinkingMode={thinkingMode}
+                setThinkingMode={setThinkingMode}
+                tokenBudget={tokenBudget}
+              />
+            </div>
           </PromptInputTools>
 
           <div className="flex items-center gap-2">
-            <div
-              className={`hidden text-xs text-muted-foreground/50 transition-opacity duration-200 lg:block ${
-                input.trim() ? 'opacity-0' : 'opacity-100'
-              }`}
-            >
-              {sendByCtrlEnter ? t('input.hintText.ctrlEnter') : t('input.hintText.enter')}
-            </div>
-            <PromptInputSubmit
-              disabled={!input.trim() || isLoading}
-              className="h-10 w-10 sm:h-10 sm:w-10"
-              onMouseDown={(event) => {
-                event.preventDefault();
-                onSubmit(event as unknown as MouseEvent<HTMLButtonElement>);
-              }}
-              onTouchStart={(event) => {
-                event.preventDefault();
-                onSubmit(event as unknown as TouchEvent<HTMLButtonElement>);
-              }}
-            />
+            {/* Streaming indicator in footer - replaces submit when active */}
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+                <div className="flex h-9 w-9 items-center justify-center">
+                  <div className="h-2 w-2 animate-pulse rounded-full bg-primary/60" />
+                </div>
+                <button
+                  type="button"
+                  onClick={onAbortSession}
+                  className="flex h-9 items-center gap-1.5 rounded-lg bg-destructive/10 px-3 text-xs font-medium text-destructive transition-colors hover:bg-destructive/20"
+                >
+                  <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 24 24">
+                    <rect x="6" y="6" width="12" height="12" rx="1" />
+                  </svg>
+                  Stop
+                </button>
+              </div>
+            ) : (
+              <>
+                <div className={`hidden text-xs text-muted-foreground/50 transition-opacity duration-200 lg:block ${input.trim() ? 'opacity-0' : 'opacity-100'}`}>
+                  {sendByCtrlEnter ? t('input.hintText.ctrlEnter') : t('input.hintText.enter')}
+                </div>
+                <PromptInputSubmit
+                  disabled={!input.trim() || isLoading}
+                  className="h-9 w-9 sm:h-10 sm:w-10"
+                  onMouseDown={(event) => {
+                    event.preventDefault();
+                    onSubmit(event as unknown as MouseEvent<HTMLButtonElement>);
+                  }}
+                  onTouchStart={(event) => {
+                    event.preventDefault();
+                    onSubmit(event as unknown as TouchEvent<HTMLButtonElement>);
+                  }}
+                />
+              </>
+            )}
           </div>
         </PromptInputFooter>
       </PromptInput>

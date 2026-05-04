@@ -6,7 +6,6 @@ import type { Project, ProjectSession, LLMProvider } from '../../../../types/app
 import { getIntrinsicMessageKey } from '../../utils/messageKeys';
 import MessageComponent from './MessageComponent';
 import ProviderSelectionEmptyState from './ProviderSelectionEmptyState';
-import ClaudeStatus from './ClaudeStatus';
 
 interface ChatMessagesPaneProps {
   scrollContainerRef: RefObject<HTMLDivElement>;
@@ -271,17 +270,7 @@ export default function ChatMessagesPane({
             );
           })}
 
-          {/* Show processing status inline with messages */}
-          {isLoading && (
-            <div className="mt-4">
-              <ClaudeStatus
-                status={claudeStatus}
-                isLoading={isLoading}
-                onAbort={onAbortSession}
-                provider={provider}
-              />
-            </div>
-          )}
+          {/* Streaming state is now handled in composer footer - no floating status */}
         </>
       )}
       </div>
