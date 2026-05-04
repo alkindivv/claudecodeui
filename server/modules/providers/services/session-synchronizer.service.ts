@@ -22,6 +22,7 @@ export const sessionSynchronizerService = {
       codex: 0,
       cursor: 0,
       gemini: 0,
+      nrouter9: 0,
     };
     const failures: string[] = [];
 
